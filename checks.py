@@ -19,16 +19,17 @@ with open("dns_to_add.txt", "r") as dns:
 
 
         #ddirect dns entry exists
-        if out_direct_proc.find("find") == -1:
-            if out_direct_proc.find(data[0]) != -1:
+
+        if re.search("find", out_direct_proc) == None:
+            if re.search(data[0], out_direct_proc, re.IGNORECASE) != None:
                 print("Direct zone. The dns entry "  + data[1] + " exists and entry is correct.")
                 need_remove+=1
             else:
                 print("Direct zone. The dns entry " + data[1] + " exists and entry is not correct. Please, fix it.")
 
         #reverse dns entry exists
-        if out_reverse_proc.find("find") == -1:
-            if out_reverse_proc.find(data[1]) != -1:
+        if re.search("find", out_reverse_proc) == None:
+            if re.search(data[1], out_reverse_proc, re.IGNORECASE) != None:
                 print("Reverse zone. The dns entry "  + data[0] + " exists and entry is correct.")
                 need_remove+=1
             else:
@@ -44,3 +45,4 @@ with open("dns_to_add.txt", "r") as dns:
         else:
             new_dns_add.write(data[0]  + " " + data[1] + "\n")
 print("Checks are done")
+
